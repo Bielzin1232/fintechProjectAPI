@@ -2,11 +2,10 @@ package com.fintechProject.fintechProject.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,20 +14,32 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Transacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID transcaoID;
+    @EqualsAndHashCode.Include
+    private UUID transacaoID;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Usuario user;
+
+
+    @Column(unique = true)
+    private String chaveIdempotencia;
+
+
+    private LocalDateTime data;
+
 
     @Column(nullable = false)
-    private Long valor;
+    private BigDecimal valor;
+    @ManyToOne()
+    @JoinColumn(name = "destinatario_id",nullable = false)
+    private Carteira destinatario;
 
-    private String descricao;
-
+    @ManyToOne
+    @JoinColumn(name = "remetente_id",nullable = false)
+    private Carteira remetente;
 
 
 

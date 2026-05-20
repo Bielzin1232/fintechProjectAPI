@@ -2,10 +2,9 @@ package com.fintechProject.fintechProject.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Table(name = "carteiras")
 @Entity
@@ -13,11 +12,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Carteira {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
+
+
+    @Version
+    private Long versao;
 
 
 
@@ -25,6 +30,7 @@ public class Carteira {
     @OneToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
+    private BigDecimal saldo = BigDecimal.ZERO;
 
 
 

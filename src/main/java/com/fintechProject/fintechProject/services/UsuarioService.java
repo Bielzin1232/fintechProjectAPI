@@ -4,6 +4,7 @@ import com.fintechProject.fintechProject.dtos.RegistrarUsuarioDTO;
 import com.fintechProject.fintechProject.dtos.UsuarioResponseDTO;
 import com.fintechProject.fintechProject.entity.Carteira;
 import com.fintechProject.fintechProject.entity.Usuario;
+import com.fintechProject.fintechProject.enums.UserRole;
 import com.fintechProject.fintechProject.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,9 @@ public class UsuarioService {
         usuario.setEmail(data.email());
         usuario.setNumeroTelefone(data.numeroTelefone());
 
-        // Aqui entra a sua linha, perfeitamente aplicada!
-        usuario.setSenha(passwordEncoder.encode(data.senha()));
 
-        // Cria a carteira zerada e atrela ao usuário (Relacionamento que conversamos)
+        usuario.setSenha(passwordEncoder.encode(data.senha()));
+        usuario.setRole(UserRole.USER);
         Carteira carteira = new Carteira();
         carteira.setUsuario(usuario);
         usuario.setCarteira(carteira);
