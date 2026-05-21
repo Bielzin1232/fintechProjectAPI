@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/transacoes")
 public class TransacaoController {
 
-    private TransacaoService transacaoService;
+    private final TransacaoService transacaoService;
+
+    public TransacaoController(TransacaoService transacaoService) {
+        this.transacaoService = transacaoService;
+    }
 
     @PostMapping("/transferir")
     public ResponseEntity<TransferenciaResponseDTO> transferencia(

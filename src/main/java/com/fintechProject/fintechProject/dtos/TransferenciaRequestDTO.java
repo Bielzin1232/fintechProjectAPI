@@ -10,15 +10,15 @@ import java.math.BigDecimal;
 
 public record TransferenciaRequestDTO(
 
-        @NotBlank(message = "{cpf.em.branco}")
-        @CPF(message = "{cpf.invalido}")
+        @NotBlank(message = "O cpf do destinatário precisa ser informado!")
+        @CPF(message = "O cpf do destinatário é inválido")
         String cpfDestinatario,
 
-        @NotNull(message = "{valor.em.branco}")
+        @NotNull(message = "O valor precisa ser informado!")
         @DecimalMin(value = "0.01", message = "O valor mínimo para transferência é R$ 0,01")
         BigDecimal valor,
 
-        @NotBlank(message = "{palavra.passe.obrigatoria}")
+        @NotBlank(message = "A palavra passe é obrigatória para a transferência!")
         String palavraPasse
 
 

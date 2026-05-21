@@ -4,6 +4,7 @@ import com.fintechProject.fintechProject.enums.UserRole;
 import jakarta.persistence.*;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -57,7 +58,8 @@ public class Usuario implements UserDetails {
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      private Carteira carteira;
-
+    @CreationTimestamp
+    @Column(updatable = false,nullable = false)
     private LocalDateTime dataCadastro;
 
     @Override

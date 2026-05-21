@@ -3,6 +3,7 @@ package com.fintechProject.fintechProject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,6 +29,8 @@ public class Transacao {
     private String chaveIdempotencia;
 
 
+    @CreationTimestamp
+    @Column(updatable = false,nullable = false)
     private LocalDateTime data;
 
 

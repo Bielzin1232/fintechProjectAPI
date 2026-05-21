@@ -16,11 +16,14 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByCpf(String cpf) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
+
         UserDetails usuario = repository.findByCpf(cpf);
+
         if (usuario == null) {
-            throw new UsernameNotFoundException("Usuário não encontrado!");
+            throw new UsernameNotFoundException("Usuário não encontrado para o CPF informado!");
         }
+
         return usuario;
     }
 }

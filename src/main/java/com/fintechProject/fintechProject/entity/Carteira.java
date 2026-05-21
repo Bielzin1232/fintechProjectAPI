@@ -30,6 +30,7 @@ public class Carteira {
     @OneToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
+    @Column(nullable = false,precision = 19,scale = 2)
     private BigDecimal saldo = BigDecimal.ZERO;
 
 

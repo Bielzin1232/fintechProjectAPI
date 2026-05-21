@@ -6,12 +6,12 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public record LoginRequest(
 
-        @CPF(message = "{cpf.invalido}")
-        @NotBlank(message = "{cpf.em.branco}")
-        @Size(min = 11,message = "{cpf.tamanho.invalido}")
+        @CPF(message = "O cpf informado é inválido")
+        @NotBlank(message = "O cpf não pode ser em branco!")
+        @Size(min = 11,message = "O tamanho informado do cpf não é válido!")
         String cpf,
-        @NotBlank(message = "{senha.em.branco}")
-        @Size(min = 8,max = 45,message = "{senha.tamanho.limite}")
+        @NotBlank(message = "A senha não pode ser em branco!")
+        @Size(min = 8,max = 45,message = "A senha precisa estar entre 8 e 45 caracteres")
         String senha
 
 
