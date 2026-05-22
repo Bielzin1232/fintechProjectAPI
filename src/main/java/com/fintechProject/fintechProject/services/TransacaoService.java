@@ -7,6 +7,8 @@ import com.fintechProject.fintechProject.entity.Usuario;
 import com.fintechProject.fintechProject.exceptions.RegraDeNegocioException;
 import com.fintechProject.fintechProject.repository.TransacaoRepository;
 import com.fintechProject.fintechProject.repository.UsuarioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +69,24 @@ public class TransacaoService {
                 usuarioLogado.getNome(),
                 usuarioDestinatario.getNome()
         );
+    }
+
+    @Transactional(readOnly = true)
+    public Page<TransferenciaResponseDTO> gerarExtrato(Usuario usuarioLogado, Pageable pageable) {
+        Page<Transacao> extratoPaginado = transacaoRepository.buscarExtratoPorUsuarioId(usuarioLogado.getId(), pageable);
+
+        return extratoPaginado.map(transacao -> {
+            String nomeRemetente = transacao.getRemetente().getUsuario().getNome();
+            String nomeDestinatario = transacao.getDestinatario().getUsuario().getNome();
+
+            return new TransferenciaResponseDTO(
+                    transacao.getTransacaoID(),
+                    transacao.getValor(),
+                    transacao.getData(),
+                    nomeRemetente,
+                    nomeDestinatario
+            );
+        });
     }
 
 

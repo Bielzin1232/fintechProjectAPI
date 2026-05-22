@@ -22,6 +22,9 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+
+
     @Transactional
     public UsuarioResponseDTO registrarUsuario(RegistrarUsuarioDTO data) {
         if (usuarioRepository.existsByCpf(data.cpf())) {

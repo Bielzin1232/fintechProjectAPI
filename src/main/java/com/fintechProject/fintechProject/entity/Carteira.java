@@ -18,6 +18,7 @@ public class Carteira {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @Column(nullable = false,updatable = false,name = "id")
     private Long id;
 
 
@@ -30,7 +31,7 @@ public class Carteira {
     @OneToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
-    @Column(nullable = false,precision = 19,scale = 2)
+    @Column(nullable = false,precision = 19,scale = 2,updatable = false)
     private BigDecimal saldo = BigDecimal.ZERO;
 
 

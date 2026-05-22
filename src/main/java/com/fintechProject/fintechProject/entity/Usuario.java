@@ -28,38 +28,42 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @Column(unique = true,nullable = false,updatable = false,name = "id")
     private Long id;
 
+    private List<ChavePix>
+
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false,name = "user_role")
     private UserRole role;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "palavra_passe")
     private String palavraPasse;
 
-    @CPF
-    @Column(nullable = false, unique = true,length = 11)
+    @Column(nullable = false, unique = true,length = 11,name = "cpf")
     private String cpf;
 
-    @Column(nullable = false, unique = true,length = 255)
+    @Column(nullable = false, unique = true,length = 255,name = "usuario_email")
     private String email;
 
-    @Column(nullable = false,length = 150)
+    @Column(nullable = false,length = 150,name = "usuario_nome")
     private String nome;
 
 
 
 
-    @Column(nullable = false,length = 20)
+    @Column(nullable = false,length = 20,name = "usuario_numero")
     private String numeroTelefone;
 
-    @Column(nullable = false,length = 60)
+    @Column(nullable = false,length = 60,name = "usuario_senha")
     private String senha;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-     private Carteira carteira;
+    private Carteira carteira;
+
     @CreationTimestamp
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false,nullable = false,name = "data_cadastro")
     private LocalDateTime dataCadastro;
 
     @Override
