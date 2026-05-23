@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChavePixRepository extends JpaRepository<ChavePix, Long> {
     Optional<ChavePix> findByValor(String valor);
+    int countByUsuarioId(Long usuarioId);
 }

@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.br.CPF;
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,8 +29,9 @@ public class Usuario implements UserDetails {
     @Column(unique = true,nullable = false,updatable = false,name = "id")
     private Long id;
 
-    private List<ChavePix>
-
+    // O espelho: Procura a variável exata chamada "usuario" lá na classe ChavePix
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ChavePix> chavesPix;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,name = "user_role")
@@ -74,7 +73,7 @@ public class Usuario implements UserDetails {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
     @Override
-    public @Nullable String getPassword() {
+    public  String getPassword() {
         return this.senha;
     }
 
@@ -85,21 +84,21 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-         return true;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 }

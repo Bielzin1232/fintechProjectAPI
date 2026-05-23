@@ -1,7 +1,6 @@
 package com.fintechProject.fintechProject.controllers;
 
-import com.fintechProject.fintechProject.dtos.PixSendRequest;
-import com.fintechProject.fintechProject.dtos.PixSendResponse;
+import com.fintechProject.fintechProject.dtos.*;
 import com.fintechProject.fintechProject.entity.Usuario;
 import com.fintechProject.fintechProject.services.PixService;
 import jakarta.validation.Valid;
@@ -21,6 +20,14 @@ public class TransacaoPixController {
         this.pixService = pixService;
     }
 
+    @PostMapping("/excluir")
+    public ResponseEntity<PixDeleteResponse> excluirChavePix(
+            @RequestBody @Valid PixDeleteRequest data,
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) {
+        return pixService.excluirChavePix(data, usuarioLogado);
+    }
+
     @PostMapping("/enviar")
     public ResponseEntity<PixSendResponse> enviarPix(
             @RequestBody @Valid PixSendRequest data,
@@ -31,12 +38,30 @@ public class TransacaoPixController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/criar")
+    public ResponseEntity<PixCreationResponse> criarChavePix(
+            @RequestBody @Valid PixCreationRequest data,
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) {
+        PixCreationResponse response = pixService.criarChavePix(data, usuarioLogado);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/extrato")
     public ResponseEntity<Page<PixSendResponse>> gerarExtratoPix(
             @AuthenticationPrincipal Usuario usuarioLogado,
             Pageable pageable
     ) {
         Page<PixSendResponse> response = pixService.gerarExtratoPix(usuarioLogado, pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<PixListResponse> listarChavesPix(
+            @Valid PixListRequest data,
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) {
+        PixListResponse response = pixService.listarChavesPix(data, usuarioLogado);
         return ResponseEntity.ok(response);
     }
 }

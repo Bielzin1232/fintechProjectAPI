@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Table(name = "carteiras")
 @Entity
@@ -24,7 +25,6 @@ public class Carteira {
 
     @Version
     private Long versao;
-
 
 
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false, unique = true)
