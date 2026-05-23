@@ -45,7 +45,8 @@ public class PixService {
                 .orElseThrow(() -> new RegraDeNegocioException("A chave PIX informada não foi encontrada!"));
         Usuario usuarioDestinatario = chavePixDestino.getUsuario();
 
-        Usuario remetente = usuarioRepository.findById(usuarioLogado.getId())
+        // Substitua a linha antiga por esta:
+        Usuario remetente = usuarioRepository.findByIdComLockParaTransferencia(usuarioLogado.getId())
                 .orElseThrow(() -> new RegraDeNegocioException("Usuário remetente não encontrado!"));
 
         if (remetente.getId().equals(usuarioDestinatario.getId())) {
@@ -116,20 +117,9 @@ public class PixService {
     }
 
     @Transactional(readOnly = true)
-    public PixListResponse listarChavesPix(PixListRequest data, Usuario usuarioLogado) {
-        if (!usuarioLogado.getCpf().equals(data.cpfUsuario())) {
-            throw new RegraDeNegocioException("Você não tem permissão para listar chaves de outro usuário!");
-        }
-
-        UserDetails userDetails = usuarioRepository.findByCpf(data.cpfUsuario());
-
-        if (userDetails == null) {
-            throw new RegraDeNegocioException("Usuário não encontrado para o CPF informado.");
-        }
-        Usuario usuario = (Usuario) userDetails;
-        return new PixListResponse(usuario.getChavesPix());
+    public PixListResponse listarChavesPix(Usuario usuarioLogado) {
+        return new PixListResponse(usuarioLogado.getChavesPix());
     }
-
     @Transactional(rollbackFor = Exception.class)
     public PixCreationResponse criarChavePix(PixCreationRequest data, Usuario usuarioLogado) {
 

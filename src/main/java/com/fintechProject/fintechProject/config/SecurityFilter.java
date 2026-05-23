@@ -33,13 +33,15 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             var cpfDoUsuario = tokenService.validarToken(token);
 
-            UserDetails usuario = usuarioRepository.findByCpf(cpfDoUsuario);
 
-            if (usuario != null) {
-                var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+            if (cpfDoUsuario != null && !cpfDoUsuario.isBlank()) {
 
+                UserDetails usuario = usuarioRepository.findByCpf(cpfDoUsuario);
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (usuario != null) {
+                    var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
         }
 

@@ -58,10 +58,9 @@ public class TransacaoPixController {
 
     @GetMapping("/listar")
     public ResponseEntity<PixListResponse> listarChavesPix(
-            @Valid PixListRequest data,
-            @AuthenticationPrincipal Usuario usuarioLogado
-    ) {
-        PixListResponse response = pixService.listarChavesPix(data, usuarioLogado);
+            @AuthenticationPrincipal Usuario usuarioLogado) {
+
+        var response = pixService.listarChavesPix(usuarioLogado);
         return ResponseEntity.ok(response);
     }
 }
